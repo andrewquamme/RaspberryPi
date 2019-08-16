@@ -8,6 +8,6 @@ while True:
     pir.wait_for_motion()
     print("Someone is in the area!")
     led.on()
-    alarm.blink(.2, .2, 3)
+    alarm.blink(.1, .1, 3)
     pir.wait_for_no_motion()
     led.off()
