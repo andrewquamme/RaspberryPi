@@ -1,7 +1,7 @@
 from gpiozero import MotionSensor, LED, Buzzer
 
 pir = MotionSensor(21)
-alarm = Buzzer(9)
+alarm = Buzzer(6)
 led = LED(23)
 
 while True:
