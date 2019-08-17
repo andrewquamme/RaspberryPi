@@ -2,7 +2,7 @@ from gpiozero import MotionSensor, LED, Buzzer
 
 pir = MotionSensor(21)
 alarm = Buzzer(6)
-led = LED(23)
+led = LED(19)
 
 while True:
     pir.wait_for_motion()
