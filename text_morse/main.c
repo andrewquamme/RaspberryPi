@@ -5,25 +5,16 @@
 
 // ########   CUSTOMIZATIONS ####################
 // Pin number declarations
-const int BUZZER = 19;  // Buzzer pin
-const int LED    = 21;  // LED pin
-const int SPEED  = 60;  // CW Speed
+const int BUZZER = 19;  // Buzzer Pin
+const int LED    = 21;  // LED Pin
+const int UNIT   = 60;  // One Unit of Time
 // ##############################################
-
-// CW constants
-const int DOT    = SPEED;
-const int SYMBOL = SPEED;
-const int DASH   = SPEED * 3;
-const int LETTER = SPEED * 3;
-const int WORD   = SPEED * 7;
 
 void convert_to_morse(char s[]);
 void play_morse();
 
 char morse[] = "";
-const int MAX_LEN       = 51;
-const int NUM_OFFSET    = 44;
-const int LETTER_OFFSET = 65;
+const int MAX_LEN = 51;
 
 char *letters[26] = {".-" ,"-...", "-.-.", "-..", ".",  // A-E
     "..-.", "--.", "....", "..", ".---",                // F-J
@@ -66,33 +57,34 @@ void convert_to_morse(char s[]) {
     strcat(morse, "||");
 
     for (int i = 0; i<strlen(s); i++) {
-
         if (s[i] == 44) {                   // comma
             strcat(morse, symNum[0]);
             strcat(morse, "|");
         }
         else if (s[i] > 45 && s[i] < 58) {  // symbols & numbers
-            strcat(morse, symNum[s[i] - NUM_OFFSET]);
+            strcat(morse, symNum[s[i] - ',']);
             strcat(morse, "|");
         }
         else if (s[i] == 32) {              // space
-            strcat(morse, " ");
-            strcat(morse, "|");
+            strcat(morse, " |");
         }
         else if (s[i] == 63) {              // question mark
             strcat(morse, symNum[1]);
             strcat(morse, "|");
         }
         else if (s[i] > 64 && s[i] < 91) {  // uppercase letters
-            strcat(morse, letters[s[i] - LETTER_OFFSET]);
+            strcat(morse, letters[s[i] - 'A']);
             strcat(morse, "|");
         }
         else if (s[i] > 96 && s[i] < 123) { // lowercase letters
-            strcat(morse, letters[s[i] - 32 - LETTER_OFFSET]);
+            strcat(morse, letters[s[i] - 32 - 'A']);
+            strcat(morse, "|");
+        }
+        else if (s[i] == 10) {
             strcat(morse, "|");
         }
         else {
-            strcat(morse, "|");
+            strcat(morse, "*|");
         }
     }
 }
@@ -105,30 +97,30 @@ void play_morse(char s[]) {
         if (s[i] == '.') {
             // printf("%s", "dit");
 
-            // digitalWrite(BUZZER, HIGH);
+            digitalWrite(BUZZER, HIGH);
             digitalWrite(LED, HIGH);
-            delay(DOT);
-            // digitalWrite(BUZZER, LOW);
+            delay(UNIT);
+            digitalWrite(BUZZER, LOW);
             digitalWrite(LED, LOW);
-            delay(SYMBOL);
+            delay(UNIT);
         }
         else if (s[i] == '-') {
             // printf("%s", "dah");
 
-            // digitalWrite(BUZZER, HIGH);
+            digitalWrite(BUZZER, HIGH);
             digitalWrite(LED, HIGH);
-            delay(DASH);
-            // digitalWrite(BUZZER, LOW);
+            delay(UNIT * 3);
+            digitalWrite(BUZZER, LOW);
             digitalWrite(LED, LOW);
-            delay(SYMBOL);
+            delay(UNIT);
         }
         else if (s[i] == '|') {
             // printf("%s", " ");
-            delay(LETTER);
+            delay(UNIT * 3);
         }
         else if (s[i] == ' ') {
             // printf("%s", "\n");
-            delay(WORD);
+            delay(UNIT * 7);
         }
 
     }
