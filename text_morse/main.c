@@ -32,7 +32,7 @@ int main(void) {
 
     // Setup GPIO
     wiringPiSetupGpio(); // Initialize wiringPi -- (Broadcom)
-    // pinMode(BUZZER, OUTPUT);  // Set BUZZER as output
+    pinMode(BUZZER, OUTPUT);  // Set BUZZER as output
     pinMode(LED, OUTPUT); // Set  LED as output
     printf("GPIO setup complete\n");
 
